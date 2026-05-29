@@ -9,7 +9,6 @@ class Prestamo:
 
         self.fecha_prestamo = datetime.now()
 
-        # 7 días para devolver
         self.fecha_devolucion = self.fecha_prestamo + timedelta(days=7)
 
     def realizar_prestamo(self):
@@ -25,6 +24,9 @@ class Prestamo:
             self.libro.disponible = False
 
             self.socio.libros_prestados += 1
+
+            # Guardar libro en lista del socio
+            self.socio.libros.append(self.libro)
 
             print(f"\nLibro prestado a {self.socio.nombre}")
 
@@ -42,9 +44,14 @@ class Prestamo:
 
         self.socio.libros_prestados -= 1
 
+        # Eliminar libro de la lista del socio
+        if self.libro in self.socio.libros:
+
+            self.socio.libros.remove(self.libro)
+
         fecha_actual = datetime.now()
 
-        # MULTA AUTOMÁTICA
+        # Multa automática
         if fecha_actual > self.fecha_devolucion:
 
             dias_tarde = (fecha_actual - self.fecha_devolucion).days

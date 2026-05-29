@@ -13,6 +13,9 @@ class Socio(Persona):
 
         self.libros_prestados = 0
 
+        # Lista de libros prestados
+        self.libros = []
+
     def agregar_multa(self, cantidad):
 
         self.__multas += cantidad
@@ -25,9 +28,24 @@ class Socio(Persona):
 
         return self.libros_prestados < 2
 
+    # Override
     def mostrar_info(self):
 
-        print(f"\nSocio: {self.nombre}")
+        print(f"\n===== INFORMACIÓN DEL SOCIO =====")
+
+        print(f"Nombre: {self.nombre}")
         print(f"Carnet: {self.carnet}")
         print(f"Libros prestados: {self.libros_prestados}")
         print(f"Multas pendientes: Q{self.__multas}")
+
+        print("\nLibros prestados:")
+
+        if len(self.libros) == 0:
+
+            print("No tiene libros prestados")
+
+        else:
+
+            for libro in self.libros:
+
+                print(f"- {libro.titulo}")
